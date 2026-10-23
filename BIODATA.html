@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jasper James R. Roa | Portfolio</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Anton, Syne, Outfit, Fira Code, Caveat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@500;700&family=Fira+Code:wght@400;600&family=Outfit:wght@300;400;500;700&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        uc: {
+                            blue: '#002b5c',  // University of Cebu Blue
+                            gold: '#FFD100',  // University of Cebu Gold
+                        },
+                        warm: {
+                            base: 'rgb(var(--color-warm-base) / <alpha-value>)',
+                            light: 'rgb(var(--color-warm-light) / <alpha-value>)',
+                        },
+                        amber: {
+                            glow: 'rgb(var(--color-amber-glow) / <alpha-value>)',
+                        },
+                        cream: {
+                            main: 'rgb(var(--color-cream-main) / <alpha-value>)',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        display: ['Syne', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                        script: ['Caveat', 'cursive'],
+                        anton: ['Anton', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* --- DYNAMIC THEME VARIABLES --- */
+        :root {
+            /* Dark Mode (Default) */
+            --color-warm-base: 10 17 32;       /* #0a1120 */
+            --color-warm-light: 17 29 53;      /* #111d35 */
+            --color-amber-glow: 245 203 92;    /* #f5cb5c */
+            --color-cream-main: 253 251 247;   /* #fdfbf7 */
+        }
+
+        body.light-mode {
+            /* Light Mode (Soft, web-suitable) */
+            --color-warm-base: 236 233 226;    /* Soft beige/grey */
+            --color-warm-light: 220 216 206;   /* Slightly darker for contrast */
+            --color-amber-glow: 249 115 22;
+            --color-cream-main: 20 27 45;      /* Dark slate for text */
+        }
+
+        /* Smooth Theme Transitions */
+        body, .glass, .terminal, .terminal-header, #intro-screen, .text-cream-main, .bg-warm-base, .bg-warm-light {
+            transition: background-color 0.6s ease-in-out, border-color 0.6s ease-in-out, color 0.6s ease-in-out, box-shadow 0.6s ease-in-out;
+        }
+
+        /* Dark Mode Shadow (Default) */
+        #home h1 {
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Light Mode Shadow (Yellow Text + Soft Shadow) */
+        body.light-mode #home h1 {
+            color: #d97706;
+            text-shadow: 2px 4px 15px rgba(88, 87, 87, 0.253);
+        }
+
+        /* Change big name on Slide 1 / Hero section in Light Mode */
+        body.light-mode #home h1 {
+            color: #d97706; /* Bright Orange */
+        }
+
+        /* Base & Grain Overlay */
+        body {
+            background-color: rgb(var(--color-warm-base));
+            color: rgb(var(--color-cream-main));
+            overflow-x: hidden;
+            cursor: none;
+            position: relative;
+        }
+
+        /* Subtle animated noise/grain overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 9997;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        a, button, input, .interactive-cmd { cursor: none; }
+
+        /* Custom Amber Cursor */
+        #cursor-dot {
+            width: 8px; height: 8px;
+            background-color: rgb(var(--color-amber-glow));
+            border-radius: 50%;
+            position: fixed; top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            pointer-events: none; z-index: 99999; 
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        #cursor-outline {
+            width: 40px; height: 40px;
+            border: 1px solid rgb(var(--color-amber-glow) / 0.6);
+            border-radius: 50%;
+            position: fixed; top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            pointer-events: none; z-index: 99998;
+            transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
+        }
+        body.hovering #cursor-dot { width: 12px; height: 12px; background-color: rgb(var(--color-cream-main)); }
+        body.hovering #cursor-outline { width: 60px; height: 60px; border-color: rgb(var(--color-amber-glow)); background-color: rgb(var(--color-amber-glow) / 0.1); backdrop-filter: blur(2px); }
+
+        /* Intro Screen */
+        #intro-screen {
+            position: fixed;
+            inset: 0;
+            background-color: rgb(var(--color-warm-base));
+            z-index: 99990;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s ease-in-out;
+        }
+        .typing-cursor::after {
+            content: '█';
+            animation: blink 1s step-start infinite;
+            color: rgb(var(--color-amber-glow));
+            margin-left: 4px;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* Main Content Wrapper */
+        #main-content {
+            opacity: 0;
+            transition: opacity 1.5s ease-out;
+            pointer-events: none;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #main-content.visible {
+            opacity: 1;
+            pointer-events: auto;
+            height: auto;
+            overflow: visible;
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgb(var(--color-warm-light) / 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgb(var(--color-amber-glow) / 0.15);
+        }
+
+        /* Scroll Reveal */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* 3D Tilt Card */
+        .tilt-container { perspective: 1500px; }
+        .tilt-card {
+            transform-style: preserve-3d;
+            transition: transform 0.1s;
+            will-change: transform;
+        }
+        .tilt-card-content { transform: translateZ(50px); }
+        .tilt-img { transform: translateZ(20px); transition: transform 0.4s ease; }
+        .tilt-container:hover .tilt-img { transform: translateZ(40px) scale(1.05); filter: brightness(0.7); }
+
+        /* Terminal Styles */
+        .terminal { background-color: rgb(var(--color-warm-base) / 0.95); border: 1px solid rgb(var(--color-amber-glow) / 0.2); }
+        .terminal-header { background-color: rgb(var(--color-warm-light)); border-bottom: 1px solid rgb(var(--color-amber-glow) / 0.1); }
+        .cmd-text { color: rgb(var(--color-amber-glow)); transition: all 0.3s; }
+        .cmd-text:hover { color: rgb(var(--color-cream-main)); text-shadow: 0 0 10px rgb(var(--color-amber-glow)); }
+        
+        /* Hero Layering Animations */
+        @keyframes heroFadeScale {
+            0% { opacity: 0; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes heroSlideUp {
+            0% { opacity: 0; transform: translateY(80px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hero-text-anim {
+            opacity: 0;
+            animation: heroFadeScale 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) 0.5s forwards;
+        }
+        
+        .hero-img-anim {
+            opacity: 0;
+            animation: heroSlideUp 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 0.8s forwards;
+        }
+
+        /* Hero Image Theme Switching */
+        #hero-img-dark, #hero-img-light {
+            transition: opacity 0.6s ease-in-out;
+        }
+        #hero-img-dark { opacity: 1; }
+        #hero-img-light { opacity: 0; }
+        
+        body.light-mode #hero-img-dark { opacity: 0; }
+        body.light-mode #hero-img-light { opacity: 1; }
+
+        /* Vinyl LP Animation & Grooves */
+        @keyframes spin-record {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin-record {
+            animation: spin-record 7s linear infinite;
+        }
+        .vinyl-grooves {
+            background: radial-gradient(circle, 
+                #181818 0%, #181818 10%, 
+                #0d0d0d 11%, #0d0d0d 13%, 
+                #222222 14%, #111111 24%, 
+                #252525 25%, #0a0a0a 35%, 
+                #222222 36%, #121212 50%, 
+                #2a2a2a 51%, #0d0d0d 65%, 
+                #222222 66%, #111111 84%, 
+                #050505 85%, #050505 100%
+            );
+        }
+    </style>
+</head>
+<body class="selection:bg-amber-glow selection:text-warm-base antialiased">
+
+    <!-- Custom Cursor -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-outline"></div>
+
+    <!-- Intro Sequence Screen -->
+    <div id="intro-screen">
+        <div class="font-mono text-xl md:text-3xl text-amber-glow">
+            <span id="typing-text"></span><span class="typing-cursor"></span>
+        </div>
+    </div>
+
+    <!-- Main Content (Hidden Initially) -->
+    <div id="main-content">
+        
+        <!-- Sticky Interactive Navbar -->
+        <header class="fixed top-0 left-0 w-full z-50 px-6 py-4">
+            <div class="max-w-7xl mx-auto glass rounded-2xl px-6 py-3 flex items-center justify-between shadow-[0_4px_30px_rgba(0,0,0,0.3)]">
+                
+                <!-- Logo / Brand -->
+                <a href="#home" class="font-display font-bold text-lg md:text-xl text-cream-main tracking-wider flex items-center">
+                    <span class="text-amber-glow mr-2">JR.</span> Portfolio
+                </a>
+
+                <!-- Desktop Nav Links -->
+                <nav class="hidden md:flex items-center space-x-8 font-sans text-sm font-medium text-cream-main/80">
+                    <a href="#home" class="hover:text-amber-glow transition-colors">Home</a>
+                    <a href="#about" class="hover:text-amber-glow transition-colors">About</a>
+                    <a href="#projects" class="hover:text-amber-glow transition-colors">Projects</a>
+                    <a href="#skills" class="hover:text-amber-glow transition-colors">Terminal</a>
+                    <a href="#life" class="hover:text-amber-glow transition-colors">Offline</a>
+                </nav>
+
+                <!-- Right Side Widget / Mobile Toggle -->
+                <div class="flex items-center space-x-4">
+                    <div class="hidden sm:flex items-center text-amber-glow font-mono text-xs bg-warm-base/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-amber-glow/30">
+                        <i class="fa-solid fa-circle text-[8px] text-green-400 mr-2 animate-pulse"></i>Online
+                    </div>
+                    
+                    <!-- Highly Interactive Theme Toggle -->
+                    <button id="theme-toggle" class="relative flex items-center justify-center w-9 h-9 rounded-full bg-warm-base/60 backdrop-blur-md border border-amber-glow/30 text-amber-glow focus:outline-none interactive-hover hover:bg-amber-glow/20 transition-all duration-300 overflow-hidden">
+                        <i class="fa-solid fa-sun absolute transition-all duration-500 ease-[cubic-bezier(0.68,-0.55,0.26,1.55)] scale-100 rotate-0 opacity-100" id="icon-sun"></i>
+                        <i class="fa-solid fa-moon absolute transition-all duration-500 ease-[cubic-bezier(0.68,-0.55,0.26,1.55)] scale-0 -rotate-90 opacity-0" id="icon-moon"></i>
+                    </button>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-btn" class="md:hidden text-cream-main focus:outline-none text-xl p-1 interactive-hover">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Dropdown Menu -->
+            <div id="mobile-menu" class="hidden md:hidden max-w-7xl mx-auto mt-2 glass rounded-2xl p-6 flex flex-col space-y-4 font-sans text-cream-main shadow-2xl">
+                <a href="#home" class="mobile-link hover:text-amber-glow transition-colors">Home</a>
+                <a href="#about" class="mobile-link hover:text-amber-glow transition-colors">About</a>
+                <a href="#projects" class="mobile-link hover:text-amber-glow transition-colors">Projects</a>
+                <a href="#skills" class="mobile-link hover:text-amber-glow transition-colors">Terminal</a>
+                <a href="#life" class="mobile-link hover:text-amber-glow transition-colors">Offline</a>
+            </div>
+        </header>
+
+        <!-- Magazine Hero Section -->
+        <section id="home" class="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-warm-light to-warm-base border-b border-amber-glow/10">
+            
+            <!-- Massive Background Text (Layer 2) -->
+            <div class="absolute w-full flex flex-col items-center justify-center z-10 pointer-events-none select-none hero-text-anim">
+                <h1 class="font-anton font-black text-[26vw] md:text-[20vw] text-cream-main leading-[0.82] uppercase whitespace-nowrap text-center drop-shadow-2xl m-0 p-0 [-webkit-text-stroke:2px_currentColor]" style="letter-spacing: 0.16em;">
+                    JASPER
+                </h1>
+                <h1 class="font-anton font-black text-[26vw] md:text-[20vw] text-cream-main leading-[0.82] uppercase whitespace-nowrap text-center drop-shadow-2xl m-0 p-0 -mt-2 md:-mt-5 [-webkit-text-stroke:2px_currentColor]" style="letter-spacing: 0.18em;">
+                    ROA
+                </h1>
+            </div>
+
+            <!-- Foreground Cutout Photo Wrapper (Layer 3) -->
+            <div class="absolute bottom-0 z-20 hero-img-anim pointer-events-auto transition-transform duration-700 hover:scale-105 flex justify-center items-end">
+                
+                <!-- Dark Mode Photo -->
+                <img id="hero-img-dark" src="Roa Jasper.png" 
+                     alt="Jasper Roa Dark Mode" 
+                    class="absolute bottom-0 h-[75vh] md:h-[90vh] w-auto object-contain object-bottom origin-bottom scale-[1.39] brightness-100 drop-shadow-[0_20px_35px_rgba(0,0,0,0.65)]">
+                <img id="hero-img-light" src="Jasper Roa.png" 
+                     alt="Jasper Roa Light Mode" 
+                     class="relative h-[75vh] md:h-[90vh] w-auto object-cover object-bottom drop-shadow-[0_20px_35px_rgba(0,0,0,0.65)]">
+                     
+            </div>
+            
+            <!-- Bottom Accents -->
+            <div class="absolute bottom-10 left-6 md:left-12 z-30 hero-text-anim" style="animation-delay: 1.5s;">
+                <p class="font-sans text-[10px] md:text-xs font-bold tracking-[0.4em] uppercase text-cream-main">BSIT - 3C</p>
+            </div>
+            
+            <div class="absolute bottom-10 right-6 md:right-12 z-30 hero-text-anim text-right" style="animation-delay: 1.5s;">
+                <p class="font-sans text-[10px] md:text-xs font-bold tracking-[0.4em] uppercase text-cream-main">Developer</p>
+            </div>
+            
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-32 px-6 relative z-10 bg-warm-light/20">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex items-center mb-16 reveal">
+                    <h3 class="text-4xl md:text-5xl font-display font-bold text-cream-main"><span class="text-amber-glow mr-4 text-2xl align-middle">01.</span>About Me</h3>
+                    <div class="h-px bg-amber-glow/20 flex-grow ml-8"></div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <div class="lg:col-span-7 space-y-6 text-cream-main/80 text-lg font-sans font-light leading-relaxed reveal pr-0 lg:pr-10">
+                        <p>
+                            Hi, I'm <strong id="handwritten-name" class="text-amber-glow font-script text-3xl md:text-4xl inline-block px-1"></strong> — I’m a 3rd-year BSIT student at UC Main who enjoys coding, designing websites, and exploring game development. I like learning new things, figuring out how things work, and turning ideas into projects. I’m still learning and improving, but I enjoy the process of building something of my own.
+                        </p>
+                        
+                        <div class="glass p-8 rounded-xl border-l-4 border-l-amber-glow relative overflow-hidden my-8 shadow-xl">
+                            <i class="fa-solid fa-quote-left absolute top-4 right-4 text-6xl text-amber-glow/5"></i>
+                            <p class="italic text-cream-main relative z-10 leading-relaxed text-xl font-display">
+                                "Behind every line of code, late-night build, and academic push is a single, unchanging purpose: to secure a comfortable, proud future for Ma and my family."
+                            </p>
+                        </div>
+                        
+                        <p>
+                          When I’m not coding or working on projects, you’ll find me playing story-driven games, exploring beautiful game worlds, or listening to music on repeat. I enjoy discovering stories that leave an impact on me, and I believe that the things I experience outside coding inspire the creativity I bring to every project.
+                        </p>
+                    </div>
+
+                    <div class="lg:col-span-5 reveal tilt-container w-full h-[500px]">
+                        <div class="tilt-card glass rounded-2xl p-3 shadow-[0_0_40px_rgb(var(--color-amber-glow)/0.1)] relative overflow-hidden group border border-amber-glow/20 h-full w-full">
+                            <div class="absolute inset-0 bg-gradient-to-t from-warm-base via-transparent to-transparent z-10 opacity-90"></div>
+                            <video src="About.mp4" autoplay loop muted playsinline class="rounded-xl w-full h-full object-cover tilt-img filter contrast-125 sepia-[0.3]"></video>
+                            <div class="absolute bottom-8 left-8 z-20 tilt-card-content">
+                                <p class="font-script text-4xl text-amber-glow drop-shadow-lg leading-tight">Driven by Purpose</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-32 px-6 relative z-10 bg-warm-base border-t border-amber-glow/5">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex items-center mb-16 reveal">
+                    <h3 class="text-4xl md:text-5xl font-display font-bold text-cream-main"><span class="text-amber-glow mr-4 text-2xl align-middle">02.</span>Major Deployments</h3>
+                    <div class="h-px bg-amber-glow/20 flex-grow ml-8"></div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                    
+                    <!-- Project 1: FoundIt -->
+                    <div class="tilt-container reveal group interactive-hover project-card" data-video-card>
+                        <div class="tilt-card glass rounded-2xl overflow-hidden h-[550px] flex flex-col border border-amber-glow/20 hover:border-amber-glow/50 relative shadow-2xl">
+                            <div class="h-1/2 overflow-hidden relative">
+                                <div class="absolute inset-0 bg-warm-base/40 z-10 mix-blend-multiply group-hover:opacity-0 transition duration-700 pointer-events-none"></div>
+                                
+                                <!-- Thumbnail Image -->
+                                <img src="Found.jpg" alt="FoundIt Project" class="project-thumb w-full h-full object-cover tilt-img filter sepia-[0.4]">
+                                
+                                <!-- Hover Preview Video -->
+                                <video class="project-video absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 pointer-events-none" muted loop playsinline preload="none">
+                                    <source src="Found.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="p-8 flex-grow flex flex-col tilt-card-content relative z-20 bg-warm-light/95 backdrop-blur-xl -mt-6 rounded-t-3xl border-t border-amber-glow/20 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+                                <div class="flex justify-between items-start mb-4">
+                                    <h4 class="text-3xl font-display font-bold text-cream-main group-hover:text-amber-glow transition-colors">FoundIt</h4>
+                                    <span class="bg-amber-glow/10 text-amber-glow border border-amber-glow/30 px-3 py-1 rounded-full text-xs font-mono tracking-widest">DATABASE</span>
+                                </div>
+                                <p class="text-cream-main/70 text-base font-sans font-light mb-6 flex-grow leading-relaxed">
+                                  A Lost & Found Management System we developed as a team to make reporting and claiming lost items on campus easier. FOUNDIT was a memorable project for us because we successfully defended our system, making all our hard work and collaboration worth it.
+                                </p>
+                                <div class="flex flex-wrap text-sm font-mono text-amber-glow gap-3 mt-auto">
+                                    <span class="px-3 py-1 rounded bg-warm-base border border-amber-glow/20"><i class="fa-brands fa-java mr-2"></i>Java</span>
+                                    <span class="px-3 py-1 rounded bg-warm-base border border-amber-glow/20"><i class="fa-solid fa-database mr-2"></i>SQL</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 2: Slice of Life (Cake Bakery Web) -->
+                    <div class="tilt-container reveal group interactive-hover project-card" data-video-card style="transition-delay: 0.2s;">
+                        <div class="tilt-card glass rounded-2xl overflow-hidden h-[550px] flex flex-col border border-amber-glow/20 hover:border-amber-glow/50 relative shadow-2xl">
+                            <div class="h-1/2 overflow-hidden relative">
+                                <div class="absolute inset-0 bg-warm-base/40 z-10 mix-blend-multiply group-hover:opacity-0 transition duration-700 pointer-events-none"></div>
+                                
+                                <!-- Thumbnail Image -->
+                                <img src="web.jpg" alt="Slice of Life Project" class="project-thumb w-full h-full object-cover tilt-img filter sepia-[0.4]">
+                                
+                                <!-- Hover Preview Video -->
+                                <video class="project-video absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 pointer-events-none" muted loop playsinline preload="none">
+                                    <source src="webvid.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="p-8 flex-grow flex flex-col tilt-card-content relative z-20 bg-warm-light/95 backdrop-blur-xl -mt-6 rounded-t-3xl border-t border-amber-glow/20 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+                                <div class="flex justify-between items-start mb-4">
+                                    <h4 class="text-3xl font-display font-bold text-cream-main group-hover:text-amber-glow transition-colors">Slice of Life</h4>
+                                    <span class="bg-amber-glow/10 text-amber-glow border border-amber-glow/30 px-3 py-1 rounded-full text-xs font-mono tracking-widest">BAKERY WEB</span>
+                                </div>
+                                <p class="text-cream-main/70 text-base font-sans font-light mb-6 flex-grow leading-relaxed">
+                                  A web project I created during my 1st year as a BSIT student. Slice of Life was a special milestone for me because I earned the highest grade for my web development project. I'm still happy and proud of how far I've come since then!
+                                </p>
+                                <div class="flex flex-wrap text-sm font-mono text-amber-glow gap-3 mt-auto">
+                                    <span class="px-3 py-1 rounded bg-warm-base border border-amber-glow/20"><i class="fa-solid fa-cake-candles mr-2"></i>Web Platform</span>
+                                    <span class="px-3 py-1 rounded bg-warm-base border border-amber-glow/20"><i class="fa-solid fa-store mr-2"></i>E-Commerce UI</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Hobbies / Terminal Section -->
+        <section id="skills" class="py-32 px-6 max-w-5xl mx-auto relative z-10">
+            <div class="absolute right-0 top-1/2 w-96 h-96 bg-amber-glow/5 rounded-full blur-[150px] pointer-events-none"></div>
+
+            <div class="flex items-center justify-between mb-12 reveal">
+                <div>
+                    <h3 class="text-4xl md:text-5xl font-display font-bold text-cream-main mb-3"><span class="text-amber-glow mr-4 text-2xl align-middle">03.</span>System Terminal</h3>
+                    <p class="text-cream-main/60 font-sans font-light text-lg">Accessing personal logs. Click a command to execute.</p>
+                </div>
+            </div>
+
+            <div class="terminal rounded-xl overflow-hidden reveal shadow-2xl img-glow group border border-amber-glow/30">
+                <div class="terminal-header px-4 py-3 flex items-center">
+                    <div class="flex space-x-2">
+                        <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-amber-glow"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                    </div>
+                    <div class="text-cream-main/50 font-mono text-xs text-center flex-grow">jasper@portfolio:~/logs</div>
+                </div>
+                
+                <div class="p-6 md:p-8 font-mono text-sm md:text-base text-cream-main min-h-[400px] max-h-[500px] overflow-y-auto" id="terminal-body">
+                    <div class="mb-6 text-green-400 opacity-90 border-l-2 border-green-400 pl-3">
+                        [SUCCESS] Connection established.<br>
+                        [INFO] Awaiting input...
+                    </div>
+                    
+                    <div class="mb-3">
+                        <span class="text-amber-glow">jasper@portfolio:~$</span> 
+                        <span class="cmd-text interactive-cmd interactive-hover cursor-none font-bold ml-2 underline decoration-amber-glow/40 underline-offset-4" onclick="executeCommand('./skills.sh')">./skills.sh</span>
+                    </div>
+                    <div class="mb-3">
+                        <span class="text-amber-glow">jasper@portfolio:~$</span> 
+                        <span class="cmd-text interactive-cmd interactive-hover cursor-none font-bold ml-2 underline decoration-amber-glow/40 underline-offset-4" onclick="executeCommand('cat hobbies.txt')">cat hobbies.txt</span>
+                    </div>
+                    <!-- New Interactive Mini-Game Command -->
+                    <div class="mb-3">
+                        <span class="text-amber-glow">jasper@portfolio:~$</span> 
+                        <span class="cmd-text interactive-cmd interactive-hover cursor-none font-bold ml-2 underline decoration-amber-glow/40 underline-offset-4" onclick="executeCommand('./game.sh')">./game.sh</span>
+                    </div>
+
+                    <div id="terminal-output" class="mt-8 space-y-6"></div>
+                    
+                    <div id="terminal-input-line" class="mt-6 hidden">
+                        <span class="text-amber-glow">jasper@portfolio:~$</span> <span class="typing-cursor"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 04. Bento Grid Section (Life Outside Code / Offline Logs) -->
+        <section id="life" class="py-32 px-6 max-w-7xl mx-auto relative z-10 border-t border-amber-glow/10">
+            <div class="flex items-center mb-16 reveal">
+                <h3 class="text-4xl md:text-5xl font-display font-bold text-cream-main"><span class="text-amber-glow mr-4 text-2xl align-middle">04.</span>Offline Logs</h3>
+                <div class="h-px bg-amber-glow/20 flex-grow ml-8"></div>
+            </div>
+
+            <!-- Asymmetric Bento Grid (Strictly Non-Tech Personal Moments) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 reveal">
+                
+                <!-- Card 1: Large Card - Singapore Travel -->
+                <div class="lg:col-span-7 glass rounded-3xl p-4 border border-amber-glow/20 group relative overflow-hidden h-[420px] shadow-2xl interactive-hover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-warm-base via-warm-base/30 to-transparent z-10 opacity-90"></div>
+                    <img src="SG.jpg" alt="Singapore Travel" class="w-full h-full object-cover rounded-2xl transition-transform duration-700 group-hover:scale-105 filter brightness-90 group-hover:brightness-100">
+                    <div class="absolute bottom-8 left-8 right-8 z-20 flex justify-between items-end">
+                        <div>
+                            <span class="bg-amber-glow/20 text-amber-glow border border-amber-glow/30 px-3 py-1 rounded-full text-xs font-mono tracking-widest uppercase inline-block mb-3">
+                                <i class="fa-solid fa-plane-departure mr-2"></i>Global Exploration
+                            </span>
+                            <h4 class="text-3xl font-display font-bold text-cream-main drop-shadow-md">Exploring Beyond Borders</h4>
+                            <p class="text-cream-main/70 font-sans font-light text-sm mt-1">First-time international vacation in Singapore</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Medium Card - Gaming & Immersion -->
+                <div class="lg:col-span-5 glass rounded-3xl p-4 border border-amber-glow/20 group relative overflow-hidden h-[420px] shadow-2xl interactive-hover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-warm-base via-warm-base/30 to-transparent z-10 opacity-90"></div>
+                    <img src="Game.jpg" alt="Gaming Setup" class="w-full h-full object-cover rounded-2xl transition-transform duration-700 group-hover:scale-105 filter brightness-90 group-hover:brightness-100">
+                    <div class="absolute bottom-8 left-8 right-8 z-20">
+                        <span class="bg-amber-glow/20 text-amber-glow border border-amber-glow/30 px-3 py-1 rounded-full text-xs font-mono tracking-widest uppercase inline-block mb-3">
+                            <i class="fa-solid fa-gamepad mr-2"></i>Gaming & Immersion
+                        </span>
+                        <h4 class="text-2xl md:text-3xl font-display font-bold text-cream-main drop-shadow-md">Story-Driven Worlds</h4>
+                        <p class="text-cream-main/70 font-sans font-light text-sm mt-1">SOMA narrative mastery & modded Minecraft shaders</p>
+                    </div>
+                </div>
+
+                <!-- Card 3: Academic Merit - Dean's Lister -->
+                <div class="lg:col-span-4 glass rounded-3xl p-4 border border-amber-glow/20 group relative overflow-hidden h-[280px] shadow-2xl interactive-hover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-warm-base via-warm-base/20 to-transparent z-10 opacity-90"></div>
+                    <img src="DL.jpg" alt="Dean's Lister Honor" class="w-full h-full object-cover rounded-2xl transition-transform duration-700 group-hover:scale-105 filter brightness-90 group-hover:brightness-100">
+                    <div class="absolute bottom-1 left-6 right-6 z-20">
+                        <span class="bg-amber-glow/20 text-amber-glow border border-amber-glow/30 px-3 py-1 rounded-full text-xs font-mono tracking-widest uppercase inline-block mb-2">
+                            <i class="fa-solid fa-graduation-cap mr-2"></i>Academic Honor
+                        </span>
+                        <h5 class="text-xl font-display font-bold text-cream-main">Dean's Lister</h5>
+                        <p class="text-cream-main/60 font-sans font-light text-xs mt-1">Recognized for top academic performance at UC Main</p>
+                    </div>
+                </div>
+
+                <!-- Card 4: Animated Vinyl LP Record -->
+                <div class="lg:col-span-4 glass rounded-3xl p-6 border-0 group relative overflow-hidden h-[280px] shadow-2xl interactive-hover flex flex-col justify-between">
+                    <!-- Ambient Glow -->
+                    <div class="absolute -right-8 -top-8 w-60 h-60 bg-amber-glow/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                    <!-- Vinyl LP Disc -->
+                    <div class="absolute -right-8 top-1/2 -translate-y-1/2 w-52 h-52 rounded-full vinyl-grooves border-4 border-neutral-900 shadow-[0_0_30px_rgba(0,0,0,0.85)] flex items-center justify-center animate-spin-record group-hover:[animation-duration:3s] transition-all">
+                        <div class="w-40 h-40 rounded-full border border-white/10 flex items-center justify-center">
+                            <div class="w-32 h-32 rounded-full border border-white/5 flex items-center justify-center">
+                                <!-- Vinyl Center Label -->
+                                <div class="w-16 h-16 rounded-full bg-gradient-to-br from-amber-glow via-amber-600 to-amber-950 flex flex-col items-center justify-center text-[7px] font-mono text-warm-base font-bold text-center border-2 border-neutral-900 shadow-inner p-1">
+                                    <span class="truncate w-full uppercase tracking-tighter">SIENNA</span>
+                                    <!-- Center Spindle Hole -->
+                                    <div class="w-2.5 h-2.5 rounded-full bg-warm-base border border-amber-glow/50 my-0.5"></div>
+                                    <span class="truncate w-full uppercase tracking-tighter">SPIRO</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stylized Tonearm -->
+                    <div class="absolute right-12 top-4 pointer-events-none z-20 flex flex-col items-center origin-top-right rotate-[22deg] group-hover:rotate-[30deg] transition-transform duration-700 ease-out">
+                        <div class="w-5 h-5 rounded-full bg-amber-glow border-2 border-warm-base shadow-lg mb-1 flex items-center justify-center">
+                            <div class="w-2 h-2 rounded-full bg-warm-base"></div>
+                        </div>
+                        <div class="w-1 h-28 bg-gradient-to-b from-amber-glow via-cream-main to-neutral-400 shadow-md"></div>
+                        <div class="w-3 h-5 bg-amber-glow rounded-sm shadow-md -mt-1 border border-warm-base"></div>
+                    </div>
+
+                    <!-- Text Info Overlay -->
+                    <div class="relative z-20 max-w-[55%] flex flex-col h-full justify-between">
+                        <div>
+                            <span class="bg-amber-glow/20 text-amber-glow border border-amber-glow/30 px-3 py-1 rounded-full text-xs font-mono tracking-widest uppercase inline-flex items-center mb-3">
+                                <i class="fa-solid fa-compact-disc mr-2 text-amber-glow animate-spin"></i>Soundtrack
+                            </span>
+                            <h5 class="text-2xl font-display font-bold text-cream-main leading-tight drop-shadow-md">You Stole the Show</h5>
+                            <p class="text-amber-glow font-sans font-medium text-sm mt-1">Sienna Spiro</p>
+                        </div>
+                        
+                        <p class="text-cream-main/60 font-sans font-light text-xs">Favorite song on heavy repeat</p>
+                    </div>
+                </div>
+
+                <!-- Card 5: Small Card - Family & Core Purpose -->
+                <div class="lg:col-span-4 glass rounded-3xl p-4 border border-amber-glow/20 group relative overflow-hidden h-[280px] shadow-2xl interactive-hover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-warm-base via-warm-base/20 to-transparent z-10 opacity-90"></div>
+                    <img src="Fam.jpg" alt="Family & Motivation" class="w-full h-full object-cover rounded-2xl transition-transform duration-700 group-hover:scale-105 filter brightness-90 group-hover:brightness-100">
+                    <div class="absolute bottom-6 left-6 right-6 z-20">
+                        <span class="bg-amber-glow/20 text-amber-glow border border-amber-glow/30 px-3 py-1 rounded-full text-xs font-mono tracking-widest uppercase inline-block mb-2">
+                            <i class="fa-solid fa-heart mr-2"></i>Core Purpose
+                        </span>
+                        <h5 class="text-xl font-display font-bold text-cream-main">Family Motivation</h5>
+                        <p class="text-cream-main/60 font-sans font-light text-xs mt-1">Striving every day to make Ma and family proud</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-16 text-center border-t border-amber-glow/10 relative z-10 bg-warm-light/30">
+            <p class="font-script text-4xl text-amber-glow mb-4 drop-shadow-md">Thank you for visiting my portfolio.</p>
+            
+            <!-- Social & Contact Links -->
+            <div class="flex justify-center items-center gap-4 my-8 flex-wrap max-w-xl mx-auto px-4">
+                <!-- Instagram -->
+                <a href="https://instagram.com/jasskxx_" target="_blank" rel="noopener noreferrer" class="interactive-hover flex items-center gap-2 px-4 py-2 rounded-full bg-warm-base/60 border border-amber-glow/20 text-cream-main/80 hover:text-amber-glow hover:border-amber-glow/50 transition-all text-sm font-sans shadow-sm">
+                    <i class="fa-brands fa-instagram text-amber-glow"></i> Instagram
+                </a>
+
+                <!-- Phone -->
+                <a href="tel:+639616582454" class="interactive-hover flex items-center gap-2 px-4 py-2 rounded-full bg-warm-base/60 border border-amber-glow/20 text-cream-main/80 hover:text-amber-glow hover:border-amber-glow/50 transition-all text-sm font-sans shadow-sm">
+                    <i class="fa-solid fa-phone text-amber-glow"></i> Phone
+                </a>
+
+                <!-- Gmail -->
+                <a href="mailto:jroarosallosa@gmail.com" class="interactive-hover flex items-center gap-2 px-4 py-2 rounded-full bg-warm-base/60 border border-amber-glow/20 text-cream-main/80 hover:text-amber-glow hover:border-amber-glow/50 transition-all text-sm font-sans shadow-sm">
+                    <i class="fa-solid fa-envelope text-amber-glow"></i> Gmail
+                </a>
+
+                <!-- GitHub -->
+                <a href="https://github.com/Jaszx0" target="_blank" rel="noopener noreferrer" class="interactive-hover flex items-center gap-2 px-4 py-2 rounded-full bg-warm-base/60 border border-amber-glow/20 text-cream-main/80 hover:text-amber-glow hover:border-amber-glow/50 transition-all text-sm font-sans shadow-sm">
+                    <i class="fa-brands fa-github text-amber-glow"></i> GitHub
+                </a>
+            </div>
+
+            <p class="font-sans font-light text-sm text-cream-main/40 tracking-widest uppercase">Designed & Built by Jasper James R. Roa &copy; 2026</p>
+        </footer>
+
+    </div> <!-- End Main Content -->
+
+    <!-- Application Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- 0. Theme Toggle Logic ---
+            const themeToggle = document.getElementById('theme-toggle');
+            const iconSun = document.getElementById('icon-sun');
+            const iconMoon = document.getElementById('icon-moon');
+
+            themeToggle.addEventListener('click', () => {
+                themeToggle.style.transform = 'scale(0.85)';
+                setTimeout(() => { themeToggle.style.transform = 'scale(1)'; }, 150);
+
+                document.body.classList.toggle('light-mode');
+                const isLight = document.body.classList.contains('light-mode');
+                
+                if (isLight) {
+                    iconSun.style.transform = 'scale(0) rotate(90deg)';
+                    iconSun.style.opacity = '0';
+                    iconMoon.style.transform = 'scale(1) rotate(0deg)';
+                    iconMoon.style.opacity = '1';
+                } else {
+                    iconMoon.style.transform = 'scale(0) rotate(-90deg)';
+                    iconMoon.style.opacity = '0';
+                    iconSun.style.transform = 'scale(1) rotate(0deg)';
+                    iconSun.style.opacity = '1';
+                }
+            });
+
+
+            // --- 1. Custom Cursor Logic ---
+            const cursorDot = document.getElementById('cursor-dot');
+            const cursorOutline = document.getElementById('cursor-outline');
+            let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+            let outlineX = mouseX, outlineY = mouseY;
+            
+            window.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX; mouseY = e.clientY;
+                cursorDot.style.left = `${mouseX}px`;
+                cursorDot.style.top = `${mouseY}px`;
+            });
+
+            function animateCursor() {
+                const ease = 0.15;
+                outlineX += (mouseX - outlineX) * ease;
+                outlineY += (mouseY - outlineY) * ease;
+                cursorOutline.style.left = `${outlineX}px`;
+                cursorOutline.style.top = `${outlineY}px`;
+                requestAnimationFrame(animateCursor);
+            }
+            animateCursor();
+
+            function attachHoverListeners() {
+                const interactables = document.querySelectorAll('a, button, .interactive-hover, .interactive-cmd');
+                interactables.forEach(el => {
+                    el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+                    el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+                });
+            }
+
+            // --- Mobile Menu Toggle ---
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            // --- 2. Short & Funny Intro Sequence ---
+            const introScreen = document.getElementById('intro-screen');
+            const mainContent = document.getElementById('main-content');
+            const typingText = document.getElementById('typing-text');
+            
+            const introPhrases = [
+                "Basta gumagana, wag mo nang galawin",
+                "Welcome in, Professor!"
+            ];
+
+            const typeSpeed = 40; 
+            const deleteSpeed = 20; 
+            const pauseBetween = 400; 
+
+            async function typePhrase(text) {
+                return new Promise(resolve => {
+                    let i = 0;
+                    typingText.innerHTML = '';
+                    const interval = setInterval(() => {
+                        typingText.innerHTML += text.charAt(i);
+                        i++;
+                        if (i >= text.length) {
+                            clearInterval(interval);
+                            resolve();
+                        }
+                    }, typeSpeed);
+                });
+            }
+
+            async function deletePhrase() {
+                return new Promise(resolve => {
+                    let text = typingText.innerHTML;
+                    const interval = setInterval(() => {
+                        text = text.substring(0, text.length - 1);
+                        typingText.innerHTML = text;
+                        if (text.length === 0) {
+                            clearInterval(interval);
+                            resolve();
+                        }
+                    }, deleteSpeed);
+                });
+            }
+
+            function delay(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            async function runIntroSequence() {
+                document.body.style.overflow = 'hidden';
+
+                for (let i = 0; i < introPhrases.length; i++) {
+                    await typePhrase(introPhrases[i]);
+                    
+                    if (i === introPhrases.length - 1) {
+                        await delay(500);
+                        break; 
+                    }
+                    
+                    await delay(pauseBetween);
+                    await deletePhrase();
+                    await delay(150);
+                }
+
+                introScreen.style.opacity = '0';
+                setTimeout(() => {
+                    introScreen.style.display = 'none';
+                    mainContent.classList.add('visible');
+                    document.body.style.overflow = ''; 
+                    attachHoverListeners();
+                    setTimeout(() => window.dispatchEvent(new Event('scroll')), 100);
+                }, 600);
+            }
+
+            setTimeout(runIntroSequence, 150);
+
+            // --- 3. Scroll Reveal & Handwritten Name Typing Trigger ---
+            const reveals = document.querySelectorAll('.reveal');
+            const revealOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
+
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, revealOptions);
+
+            reveals.forEach(reveal => revealObserver.observe(reveal));
+
+            const nameTarget = document.getElementById('handwritten-name');
+            const nameString = "Jasper James R. Roa";
+            let isTypingActive = false;
+
+            function triggerSmoothHandwriting() {
+                if (isTypingActive) return;
+                isTypingActive = true;
+                let idx = 0;
+                nameTarget.innerHTML = '';
+                
+                function typeNextLetter() {
+                    if (idx < nameString.length) {
+                        nameTarget.innerHTML += nameString.charAt(idx);
+                        idx++;
+                        const randomSpeed = Math.floor(Math.random() * 40) + 85; 
+                        setTimeout(typeNextLetter, randomSpeed);
+                    } else {
+                        isTypingActive = false;
+                    }
+                }
+                typeNextLetter();
+            }
+
+            const aboutSection = document.getElementById('about');
+            if (aboutSection) {
+                const aboutObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            triggerSmoothHandwriting();
+                        }
+                    });
+                }, { threshold: 0.35 });
+                aboutObserver.observe(aboutSection);
+            }
+
+            // --- Video Hover Playback Logic for Projects ---
+            const videoCards = document.querySelectorAll('[data-video-card]');
+            videoCards.forEach(card => {
+                const video = card.querySelector('.project-video');
+                
+                card.addEventListener('mouseenter', () => {
+                    if (video) {
+                        video.style.opacity = '1';
+                        video.play().catch(e => console.log("Autoplay blocked/failed: ", e));
+                    }
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    if (video) {
+                        video.style.opacity = '0';
+                        video.pause();
+                        video.currentTime = 0;
+                    }
+                });
+            });
+
+
+            // --- 4. Interactive Terminal Logic & Mini-Game ---
+            window.executeCommand = function(cmd) {
+                const outputDiv = document.getElementById('terminal-output');
+                const inputLine = document.getElementById('terminal-input-line');
+                const terminalBody = document.getElementById('terminal-body');
+                
+                const execLine = document.createElement('div');
+                execLine.innerHTML = `<span class="text-amber-glow">jasper@portfolio:~$</span> <span class="text-cream-main">${cmd}</span>`;
+                outputDiv.appendChild(execLine);
+
+                document.querySelectorAll('.interactive-cmd').forEach(el => el.style.pointerEvents = 'none');
+                
+                const loaderLine = document.createElement('div');
+                loaderLine.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin text-amber-glow/70 mr-3"></i><span class="text-cream-main/60">Executing...</span>`;
+                outputDiv.appendChild(loaderLine);
+                terminalBody.scrollTop = terminalBody.scrollHeight;
+
+                setTimeout(() => {
+                    loaderLine.remove();
+                    const response = document.createElement('div');
+                    response.className = "mb-6 border-l-2 border-amber-glow pl-4 py-4 bg-warm-light/30 rounded-r shadow-inner";
+
+                    if (cmd === './skills.sh') {
+                        response.innerHTML = `
+                            <div class="text-amber-glow font-bold mb-4 flex items-center"><i class="fa-solid fa-microchip mr-2"></i> Loaded Modules:</div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm font-sans tracking-wide">
+                                <div class="bg-warm-base/50 p-2 rounded border border-amber-glow/10"><i class="fa-solid fa-globe text-amber-glow mr-2"></i> Web Development</div>
+                                <div class="bg-warm-base/50 p-2 rounded border border-amber-glow/10"><i class="fa-solid fa-gamepad text-amber-glow mr-2"></i> Game Development</div>
+                                <div class="bg-warm-base/50 p-2 rounded border border-amber-glow/10"><i class="fa-brands fa-java text-amber-glow mr-2"></i> Java & C# Architecture</div>
+                                <div class="bg-warm-base/50 p-2 rounded border border-amber-glow/10"><i class="fa-solid fa-database text-amber-glow mr-2"></i> SQL Database Mgmt</div>
+                            </div>
+                        `;
+                    } else if (cmd === 'cat hobbies.txt') {
+                        response.innerHTML = `
+                            <div class="text-cream-main/90 font-sans leading-relaxed space-y-4">
+                                <div>
+                                    <span class="text-amber-glow font-bold"><i class="fa-solid fa-headset mr-2"></i>Gaming:</span> <br/>
+                                    Diving deep into psychological, story-driven experiences. Currently appreciating the narrative mastery of <strong class="text-amber-glow bg-amber-glow/10 px-1">SOMA</strong>.
+                                </div>
+                                <div>
+                                    <span class="text-amber-glow font-bold"><i class="fa-solid fa-music mr-2"></i>Audio Tracking:</span> <br/>
+                                    Fueling coding sessions with <strong class="text-amber-glow bg-amber-glow/10 px-1">Sienna Spiro</strong> ("You Stole the Show") and <strong class="text-amber-glow bg-amber-glow/10 px-1">Taylor Swift</strong>.
+                                </div>
+                            </div>
+                        `;
+                    } else if (cmd === './game.sh') {
+                        const gameId = 'game-' + Date.now();
+                        response.innerHTML = `
+                            <div class="text-amber-glow font-bold mb-2 flex items-center"><i class="fa-solid fa-bug text-red-400 mr-2"></i> [MINI GAME] Fix the Infinite Loop!</div>
+                            <p class="text-cream-main/80 text-xs mb-3 font-sans">Which line is causing the server to freeze up?</p>
+                            
+                            <pre class="bg-warm-base/80 p-3 rounded text-xs text-amber-glow/90 font-mono mb-4 border border-amber-glow/20">
+1: let count = 0;
+2: while (count < 5) {
+3:   console.log("Serving portfolio...");
+4:   // count++; 
+5: }</pre>
+
+                            <div class="flex flex-wrap gap-2 text-xs">
+                                <button onclick="checkBugChoice(1, '${gameId}')" class="interactive-hover px-3 py-1.5 bg-warm-base border border-amber-glow/30 hover:border-amber-glow rounded font-mono text-cream-main transition-colors">Line 1: let count = 0;</button>
+                                <button onclick="checkBugChoice(2, '${gameId}')" class="interactive-hover px-3 py-1.5 bg-warm-base border border-amber-glow/30 hover:border-amber-glow rounded font-mono text-cream-main transition-colors">Line 2: while loop condition</button>
+                                <button onclick="checkBugChoice(4, '${gameId}')" class="interactive-hover px-3 py-1.5 bg-warm-base border border-amber-glow/30 hover:border-amber-glow rounded font-mono text-cream-main transition-colors">Line 4: // count++; (Commented out)</button>
+                            </div>
+                            <div id="${gameId}" class="mt-4 font-mono text-xs"></div>
+                        `;
+                    }
+                    
+                    outputDiv.appendChild(response);
+                    
+                    document.querySelectorAll('.interactive-cmd').forEach(el => el.style.pointerEvents = 'auto');
+                    inputLine.classList.remove('hidden');
+                    terminalBody.scrollTop = terminalBody.scrollHeight;
+                    attachHoverListeners();
+                    
+                }, 800); 
+            }
+
+            // Interactive Mini Game Checker Function
+            window.checkBugChoice = function(lineNum, targetId) {
+                const resultDiv = document.getElementById(targetId);
+                if (!resultDiv) return;
+
+                if (lineNum === 4) {
+                    resultDiv.innerHTML = `
+                        <div class="p-3 bg-green-900/30 border border-green-500/50 rounded text-green-400">
+                            <i class="fa-solid fa-circle-check mr-2"></i> <strong>BUG FIXED!</strong> Line 4 was commented out, so <code>count</code> never incremented! Server CPU back to 1%. +100 DEV EXP 🚀
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="p-3 bg-red-900/30 border border-red-500/50 rounded text-red-400">
+                            <i class="fa-solid fa-triangle-exclamation mr-2"></i> <strong>WRONG LINE!</strong> Try again. Hint: Why is <code>count</code> staying at 0 forever?
+                        </div>
+                    `;
+                }
+                
+                const terminalBody = document.getElementById('terminal-body');
+                terminalBody.scrollTop = terminalBody.scrollHeight;
+            };
+
+            // --- 5. 3D Tilt Card Logic ---
+            const tiltContainers = document.querySelectorAll('.tilt-container');
+
+            tiltContainers.forEach(container => {
+                const card = container.querySelector('.tilt-card');
+                
+                container.addEventListener('mousemove', (e) => {
+                    const rect = container.getBoundingClientRect();
+                    const x = e.clientX - rect.left; 
+                    const y = e.clientY - rect.top;  
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = ((y - centerY) / centerY) * -8; 
+                    const rotateY = ((x - centerX) / centerX) * 8;
+                    
+                    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                    card.style.transition = 'none'; 
+                });
+
+                container.addEventListener('mouseleave', () => {
+                    card.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    card.style.transform = 'rotateX(0) rotateY(0)';
+                });
+                
+                container.addEventListener('mouseenter', () => {
+                   card.style.transition = 'transform 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94)'; 
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>
