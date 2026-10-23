@@ -173,6 +173,24 @@
             border: 1px solid rgb(var(--color-amber-glow) / 0.15);
         }
 
+        /* Active Nav Indicator Styling */
+        .nav-link.active, .mobile-link.active {
+            color: rgb(var(--color-amber-glow)) !important;
+            font-weight: 700;
+            position: relative;
+        }
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: rgb(var(--color-amber-glow));
+            border-radius: 9999px;
+            box-shadow: 0 0 8px rgb(var(--color-amber-glow));
+        }
+
         /* Scroll Reveal */
         .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
         .reveal.active { opacity: 1; transform: translateY(0); }
@@ -271,13 +289,13 @@
                     <span class="text-amber-glow mr-2">JR.</span> Portfolio
                 </a>
 
-                <!-- Desktop Nav Links -->
+                <!-- Desktop Nav Links with Active Indicators -->
                 <nav class="hidden md:flex items-center space-x-8 font-sans text-sm font-medium text-cream-main/80">
-                    <a href="#home" class="hover:text-amber-glow transition-colors">Home</a>
-                    <a href="#about" class="hover:text-amber-glow transition-colors">About</a>
-                    <a href="#projects" class="hover:text-amber-glow transition-colors">Projects</a>
-                    <a href="#skills" class="hover:text-amber-glow transition-colors">Terminal</a>
-                    <a href="#life" class="hover:text-amber-glow transition-colors">Offline</a>
+                    <a href="#home" class="nav-link hover:text-amber-glow transition-all py-1">Home</a>
+                    <a href="#about" class="nav-link hover:text-amber-glow transition-all py-1">About</a>
+                    <a href="#projects" class="nav-link hover:text-amber-glow transition-all py-1">Projects</a>
+                    <a href="#skills" class="nav-link hover:text-amber-glow transition-all py-1">Terminal</a>
+                    <a href="#life" class="nav-link hover:text-amber-glow transition-all py-1">Offline</a>
                 </nav>
 
                 <!-- Right Side Widget / Mobile Toggle -->
@@ -728,7 +746,31 @@
                 });
             });
 
-            // --- 2. Short & Funny Intro Sequence ---
+            // --- 2. ScrollSpy Active Nav Link Observer ---
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link, .mobile-link');
+
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const activeId = entry.target.getAttribute('id');
+                        navLinks.forEach(link => {
+                            if (link.getAttribute('href') === `#${activeId}`) {
+                                link.classList.add('active');
+                            } else {
+                                link.classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            }, {
+                rootMargin: '-30% 0px -50% 0px',
+                threshold: 0
+            });
+
+            sections.forEach(section => sectionObserver.observe(section));
+
+            // --- 3. Short & Funny Intro Sequence ---
             const introScreen = document.getElementById('intro-screen');
             const mainContent = document.getElementById('main-content');
             const typingText = document.getElementById('typing-text');
@@ -803,7 +845,7 @@
 
             setTimeout(runIntroSequence, 150);
 
-            // --- 3. Scroll Reveal & Handwritten Name Typing Trigger ---
+            // --- 4. Scroll Reveal & Handwritten Name Typing Trigger ---
             const reveals = document.querySelectorAll('.reveal');
             const revealOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
 
@@ -875,7 +917,7 @@
             });
 
 
-            // --- 4. Interactive Terminal Logic & Mini-Game ---
+            // --- 5. Interactive Terminal Logic & Mini-Game ---
             window.executeCommand = function(cmd) {
                 const outputDiv = document.getElementById('terminal-output');
                 const inputLine = document.getElementById('terminal-input-line');
@@ -975,7 +1017,7 @@
                 terminalBody.scrollTop = terminalBody.scrollHeight;
             };
 
-            // --- 5. 3D Tilt Card Logic ---
+            // --- 6. 3D Tilt Card Logic ---
             const tiltContainers = document.querySelectorAll('.tilt-container');
 
             tiltContainers.forEach(container => {
